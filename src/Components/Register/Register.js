@@ -1,11 +1,10 @@
 import {Link} from 'react-router-dom'
-import {useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useState, useEffect} from 'react'
+import {useDispatch} from 'react-redux'
 import './Register.sass'
 
 
 function Register() {
-    const users = useSelector(state => state.users)
     const dispatch = useDispatch()
 
     const [registerComplete, setRegisterComplete] = useState(false)
@@ -21,6 +20,10 @@ function Register() {
     const [lastNameIsValid, setLastNameIsValid] = useState(true)
     const [formIsValid, setFormIsValid] = useState(false)
 
+    useEffect(() => {
+        formCheck()
+    }, [email, password, confirmPassword, firstName, lastName])
+
     const onEmailHandler = (e) => {
         setEmail(e.target.value)
         const pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i)
@@ -29,7 +32,6 @@ function Register() {
         } else {
             setEmailIsValid(true)
         }
-        formCheck()
     }
 
     const onPasswordHanlder = (e) => {
@@ -40,7 +42,6 @@ function Register() {
         } else {
             setPasswordIsValid(true)
         }
-        formCheck()
     }
 
     const onConfirmPasswordHandler = (e) => {
@@ -50,28 +51,25 @@ function Register() {
         } else {
             setConfirmPasswordIsValid(true)
         }
-        formCheck()
     }
 
      const onFirstNameHandler = (e) => {
         setFirstName(e.target.value)
         let isValid = nameCheck(e.target.value)
         setFirstNameIsValid(isValid)
-        formCheck()
      }
 
      const onLastNameHandler = (e) => {
          setLastName(e.target.value)
          let isValid = nameCheck(e.target.value)
          setLastNameIsValid(isValid)
-         formCheck()
      }
 
      const nameCheck = (text) => {
-         if(text.length > 1) {
-             return true
-         }
-         return false
+        if(text.length > 1) {
+            return true
+        }
+        return false
      }
 
      const formCheck = () => {

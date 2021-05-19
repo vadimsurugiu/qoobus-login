@@ -9,7 +9,9 @@ function Welcome() {
                 <Link to="/register">
                     <button className="register">Register</button>
                 </Link>
-                <button className="login">Login</button>
+                <Link to="/login">
+                    <button className="login">Login</button>
+                </Link>
             </div>
         </div>
     )
