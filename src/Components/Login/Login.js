@@ -6,6 +6,7 @@ import './Login.sass'
 
 function Login() {
     const users = useSelector(state => state.users)
+    const user = useSelector(state => state.user)
     const isLogged = useSelector(state => state.isLogged)
     const dispatch = useDispatch()
     const history = useHistory()
@@ -13,9 +14,9 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginIsValid, setLoginIsValid] = useState(false)
+    const [credentialsIsValid, setCredentialsIsValid] = useState(true)
 
     useEffect(() => {
-        console.log(isLogged);
         if(isLogged) history.push('/')
         loginCheck()
     }, [email, password])
@@ -36,13 +37,36 @@ function Login() {
         }
     }
 
+    const saveUserDetails = () => {
+        const userDetails = {
+            id: email,
+            email: '',
+            firstName: '',
+            lastName: '',
+            password: ''
+        }
+        users.map(user => {
+            if(user.id === userDetails.id) {
+                userDetails.email = user.email
+                userDetails.firstName = user.firstName
+                userDetails.lastName = user.lastName
+                userDetails.password = user.password
+            }
+        })
+
+        dispatch({type: "ADD_USER_DETAILS", userDetails})
+    }
+
     const loginHandler = () => {
         let isUser = false
         if(users.length > 0 && users.find(user => user.email === email && user.password === password)) {
             isUser = true
+            saveUserDetails()
+            setCredentialsIsValid(true)
+        } else {
+            setCredentialsIsValid(false)
         }
         if(isUser) dispatch({type: "LOG_IN"})
-        console.log(isLogged);
     }
 
     return (
@@ -62,6 +86,9 @@ function Login() {
                         value={password}
                         onChange={onPasswordHandler}
                     />
+                    {!credentialsIsValid && (
+                        <span>Invalid email or password.</span>
+                    )}
                     <div>
                         <Link to="/">
                             <div className="back">Go Back</div>
