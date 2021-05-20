@@ -19,7 +19,7 @@ const Home = () => {
                 </div>
             </div>
             <div className="home-content">
-                <h1 className="animate__animated animate__bounceIn">Hello {userDetails.firstName} {userDetails.lastName} </h1>
+                <h2 className="animate__animated animate__bounceIn">Hello {userDetails.firstName} {userDetails.lastName} </h2>
                 <h1 className="animate__animated animate__fadeInUp">WOW! Animation!</h1>
                 <p>Press this button to go to the login page and see how you get redirected back.</p>
                 <Link to="/login">
