@@ -6,7 +6,6 @@ import './Login.sass'
 
 function Login() {
     const users = useSelector(state => state.users)
-    const user = useSelector(state => state.user)
     const isLogged = useSelector(state => state.isLogged)
     const dispatch = useDispatch()
     const history = useHistory()
@@ -19,7 +18,7 @@ function Login() {
     useEffect(() => {
         if(isLogged) history.push('/')
         loginCheck()
-    }, [email, password])
+    }, [email, password, history])
 
     const onEmailHandler = (e) => {
         setEmail(e.target.value)
