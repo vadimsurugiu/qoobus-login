@@ -16,7 +16,7 @@ function Login() {
     const [credentialsIsValid, setCredentialsIsValid] = useState(true)
 
     useEffect(() => {
-        if(isLogged) history.push('/')
+        if(isLogged === 'true') history.push('/')
         loginCheck()
     }, [email, password, history])
 
@@ -58,7 +58,7 @@ function Login() {
 
     const loginHandler = () => {
         let isUser = false
-        if(users.length > 0 && users.find(user => user.email === email && user.password === password)) {
+        if(users.length > 0 && users.find(user => user.email === email && user.password === btoa(password))) {
             isUser = true
             saveUserDetails()
             setCredentialsIsValid(true)
@@ -70,7 +70,14 @@ function Login() {
 
     return (
         <div className="login-cnt">
-            {!isLogged && (
+            {isLogged === 'true' ? (
+                <>
+                    <h1>You have succesfully logged in!</h1>
+                    <Link to="/">
+                        <div className="back">Go to Home</div>
+                    </Link>
+                </>
+            ) : (
                 <>
                     <h1>Login</h1>
                     <input 
@@ -99,14 +106,6 @@ function Login() {
                             Login
                         </button>
                     </div>
-                </>
-            )}
-            {isLogged && (
-                <>
-                    <h1>You have succesfully logged in!</h1>
-                    <Link to="/">
-                        <div className="back">Go to Home</div>
-                    </Link>
                 </>
             )}
         </div>

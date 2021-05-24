@@ -1,9 +1,13 @@
-const isLoggedReducer = (state = false, action) => {
+const isLoggedState = localStorage.getItem('isLogged')
+
+const isLoggedReducer = (state = isLoggedState, action) => {
     switch(action.type) {
         case "LOG_IN":
-            return true
+            localStorage.setItem('isLogged', 'true')
+            return 'true'
         case "LOG_OUT":
-            return false
+            localStorage.setItem('isLogged', 'false')
+            return 'false'
         default:
             return state
     }

@@ -96,7 +96,7 @@ function Register() {
             email: email,
             firstName: firstName,
             lastName: lastName,
-            password: password
+            password: btoa(password)
         }
         dispatch({type:"ADD_USER", user})
         setRegisterComplete(true)

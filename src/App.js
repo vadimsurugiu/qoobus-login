@@ -3,6 +3,7 @@ import {
   Switch,
   Route
 } from "react-router-dom"
+import {useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import './App.sass'
 import Welcome from './Components/Welcome/Welcome'
@@ -13,15 +14,19 @@ import Home from './Components/Home/Home'
 function App() {
   const isLogged = useSelector(state => state.isLogged)
 
+  useEffect(() => {
+    console.log(isLogged);
+    console.log(localStorage.getItem('isLogged'));
+  }, [isLogged])
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          {isLogged && (
+          {isLogged === 'true' ? (
             <Home />
-          )}
-          {!isLogged && (
-            <Welcome/>
+          ) : (
+            <Welcome />
           )}
         </Route>
         <Route exact path="/register">
